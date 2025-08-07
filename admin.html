@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SLI Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #2e86de;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    .total {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📊 Student Life Income – Admin Panel</h2>
+
+  <div class="total" id="totalStats"></div>
+
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>🆔 ID</th>
+        <th>👤 Username</th>
+        <th>💰 Balance ($)</th>
+        <th>👥 Referrals</th>
+        <th>🤝 Referred By</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const users = [
+      {
+        id: 12345678,
+        username: "user1",
+        balance: 1.25,
+        referrals: [23456789, 34567890],
+        referred_by: null
+      },
+      {
+        id: 23456789,
+        username: "user2",
+        balance: 0.75,
+        referrals: [],
+        referred_by: 12345678
+      }
+    ];
+
+    function loadTable() {
+      const tbody = document.querySelector("#userTable tbody");
+      let totalBalance = 0;
+      let totalUsers = users.length;
+
+      users.forEach(user => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${user.id}</td>
+          <td>@${user.username || "N/A"}</td>
+          <td>${user.balance.toFixed(2)}</td>
+          <td>${user.referrals.length}</td>
+          <td>${user.referred_by || "N/A"}</td>
+        `;
+        totalBalance += user.balance;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById("totalStats").innerText = 
+        \`👥 Total Users: \${totalUsers} | 💰 Total Balance: $\${totalBalance.toFixed(2)}\`;
+    }
+
+    loadTable();
+  </script>
+</body>
+</html>
